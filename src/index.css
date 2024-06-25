@@ -1,0 +1,38 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.block {
+  padding: 10px;
+  border: 2px solid black;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.list-block {
+  padding: 10px;
+  border: 2px solid black;
+}
+
+.truncated-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.item-dec {
+  display: flex;
+  justify-content: space-between;
+}
