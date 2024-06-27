@@ -14,7 +14,7 @@ const Form = ({ liftingNewUser }) => {
     try {
       const response = await employees.post(newUser);
       liftingNewUser(response);
-      alert("new user is added!!!", response);
+      alert("new user is added!!!");
     } catch (error) {
       console.log(error);
     }

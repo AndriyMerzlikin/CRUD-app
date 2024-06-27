@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-const Button = ({btn = [], item = {}, className = ""}) => {
+const Button = ({ btn = [], item = {}, className = "" }) => {
   return (
     <button
-      
       className={className}
       onClick={() => btn.handleClick(item.id, item.completed)}
     >

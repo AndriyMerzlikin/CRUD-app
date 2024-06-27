@@ -1,4 +1,4 @@
-import Button from "../../../../Button/Button";
+import Button from "../../../Button/Button";
 
 /* eslint-disable react/prop-types */
 const ListItem = ({ item = {}, btns = [] }) => {

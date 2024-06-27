@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import serviceEmployees from "../../services/employees";
+import serviceEmployees from "../../../services/employees";
 import EmployeesBlock from "./EmployeesBlock/EmployeesBlock";
-import Form from "./Form/Form";
 
-const Employees = () => {
+const Employees = ({ newUser }) => {
   const [employeesList, setEmployeesList] = useState([]);
   // const [filteredByStatusList, setFilteredByStatusList] = useState([]);
 
@@ -43,6 +43,12 @@ const Employees = () => {
   useEffect(() => {
     getEmployees();
   }, []);
+
+  useEffect(() => {
+    if (newUser) {
+      getEmployees();
+    }
+  }, [newUser]);
 
   useEffect(() => {
     // const filteredByNameList = employeesList.filter((item) =>
@@ -143,19 +149,16 @@ const Employees = () => {
   ];
 
   return (
-    <>
-      <Form />
-      <div className="block">
-        {employeesBlock.map((item, index) => (
-          <EmployeesBlock
-            key={index}
-            title={item.title}
-            list={item.list}
-            btns={item.btns}
-          />
-        ))}
-      </div>
-    </>
+    <div className="block">
+      {employeesBlock.map((item, index) => (
+        <EmployeesBlock
+          key={index}
+          title={item.title}
+          list={item.list}
+          btns={item.btns}
+        />
+      ))}
+    </div>
   );
 };
 

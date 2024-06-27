@@ -1,10 +1,11 @@
 import "./App.css";
-import Employees from "./components/Employees/Employees";
+import CRUD from "./components/CRUD/CRUD";
+
 
 function App() {
   return (
     <>
-      <Employees />
+      <CRUD/>
     </>
   );
 }
