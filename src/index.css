@@ -29,10 +29,26 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px;
+  max-width: 100px;
+}
+
+.scroll-list {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .item-dec {
   display: flex;
   justify-content: space-between;
+}
+
+/* .action-btn {
+  
+} */
+
+/* FORM */
+
+.form-style {
+  display: flex;
+  gap: 20px;
 }
