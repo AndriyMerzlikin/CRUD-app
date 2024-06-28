@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import serviceEmployees from "../../../services/employees";
 import EmployeesBlock from "./EmployeesBlock/EmployeesBlock";
 
-const Employees = ({ newUser }) => {
+const Employees = ({ newUser, newName, newExp }) => {
   const [employeesList, setEmployeesList] = useState([]);
+
   // const [filteredByStatusList, setFilteredByStatusList] = useState([]);
 
-  // const [filteredList, setFilteredList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
 
   const [employeesJuniors, setEmployeesJuniors] = useState([]);
   const [employeesMiddle, setEmployeesMiddle] = useState([]);
@@ -16,9 +17,19 @@ const Employees = ({ newUser }) => {
   const getEmployees = async () => {
     const response = await serviceEmployees.get();
     setEmployeesList(response);
-    // setFilteredByStatusList(response);
+    setFilteredList(response);
     console.log(response);
   };
+
+  useEffect(() => {
+    getEmployees();
+  }, []);
+
+  useEffect(() => {
+    if (newUser) {
+      getEmployees();
+    }
+  }, [newUser]);
 
   // const filterEmployeesByStatus = (status) => {
   //   setEmployeesList(
@@ -41,60 +52,56 @@ const Employees = ({ newUser }) => {
   // };
 
   useEffect(() => {
-    getEmployees();
-  }, []);
+    let filtered = employeesList;
 
-  useEffect(() => {
-    if (newUser) {
-      getEmployees();
+    if (newName) {
+      filtered = filtered.filter((item) =>
+        item.title.toLowerCase().includes(newName.toLowerCase())
+      );
     }
-  }, [newUser]);
+
+    if (newExp && newExp !== "none") {
+      filtered = filtered.filter((item) => item.userId === parseInt(newExp));
+    }
+
+    setFilteredList(filtered);
+  }, [employeesList, newName, newExp]);
 
   useEffect(() => {
-    // const filteredByNameList = employeesList.filter((item) =>
-    //   item.title.toLowerCase().includes(inputValue.toLowerCase())
-    // );
-
     setEmployeesJuniors(
-      employeesList.filter(
+      filteredList.filter(
         (employee) => employee.userId >= 1 && employee.userId < 4
       )
     );
     setEmployeesMiddle(
-      employeesList.filter(
+      filteredList.filter(
         (employee) => employee.userId > 3 && employee.userId < 7
       )
     );
-    setEmployeesSeniors(
-      employeesList.filter((employee) => employee.userId > 6)
-    );
-  }, [employeesList]);
+    setEmployeesSeniors(filteredList.filter((employee) => employee.userId > 6));
+  }, [filteredList]);
 
-  // const filteredByNameList = employeesList.filter((item) =>
-  //   item.title.toLowerCase().includes(inputValue.toLocaleLowerCase())
-  // );
+  // useEffect(() => {
+  //   setFilteredList(
+  //     employeesList.filter((item) =>
+  //       item.title.toLowerCase().includes(newName.toLowerCase())
+  //     )
+  //   );
+  // }, [employeesList, newName]);
 
   // useEffect(() => {
   //   setEmployeesJuniors(
-  //     filteredByNameList.filter(
+  //     filteredList.filter(
   //       (employee) => employee.userId >= 1 && employee.userId < 4
   //     )
   //   );
-  // }, [filteredByNameList]);
-
-  // useEffect(() => {
   //   setEmployeesMiddle(
-  //     filteredByNameList.filter(
+  //     filteredList.filter(
   //       (employee) => employee.userId > 3 && employee.userId < 7
   //     )
   //   );
-  // }, [filteredByNameList]);
-
-  // useEffect(() => {
-  //   setEmployeesSeniors(
-  //     filteredByNameList.filter((employee) => employee.userId > 6)
-  //   );
-  // }, [filteredByNameList]);
+  //   setEmployeesSeniors(filteredList.filter((employee) => employee.userId > 6));
+  // }, [filteredList]);
 
   const handleItemDelete = async (id) => {
     try {
@@ -116,6 +123,7 @@ const Employees = ({ newUser }) => {
             : item
         )
       );
+      alert("status has changed!!!");
     } catch (error) {
       console.log(error);
     }
@@ -125,26 +133,20 @@ const Employees = ({ newUser }) => {
     {
       title: "JUNIORS",
       list: employeesJuniors,
-      btns: [
-        { title: "delete", handleClick: handleItemDelete },
-        { title: "completed", handleClick: handleItemUpdate },
-      ],
+      btns: [{ title: "delete", handleClick: handleItemDelete }],
+      filters: [{ title: "status", handleChangeStatus: handleItemUpdate }],
     },
     {
       title: "MIDDLE",
       list: employeesMiddle,
-      btns: [
-        { title: "delete", handleClick: handleItemDelete },
-        { title: "completed", handleClick: handleItemUpdate },
-      ],
+      btns: [{ title: "delete", handleClick: handleItemDelete }],
+      filters: [{ title: "status", handleChangeStatus: handleItemUpdate }],
     },
     {
       title: "SENIORS",
       list: employeesSeniors,
-      btns: [
-        { title: "delete", handleClick: handleItemDelete },
-        { title: "completed", handleClick: handleItemUpdate },
-      ],
+      btns: [{ title: "delete", handleClick: handleItemDelete }],
+      filters: [{ title: "status", handleChangeStatus: handleItemUpdate }],
     },
   ];
 
@@ -156,6 +158,7 @@ const Employees = ({ newUser }) => {
           title={item.title}
           list={item.list}
           btns={item.btns}
+          filters={item.filters}
         />
       ))}
     </div>

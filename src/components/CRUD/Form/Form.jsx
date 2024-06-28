@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import employees from "../../../services/employees";
 
 const Form = ({ liftingNewUser }) => {
@@ -9,15 +9,24 @@ const Form = ({ liftingNewUser }) => {
     completed: true,
   });
 
+  const formRef = useRef();
+
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    console.log("hello");
     try {
       const response = await employees.post(newUser);
       liftingNewUser(response);
+      handleResetForm();
+      console.log("new user is added!!!", response);
       alert("new user is added!!!");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleResetForm = () => {
+    formRef.current.reset();
   };
 
   const handleUserTitle = (e) => {
@@ -31,12 +40,12 @@ const Form = ({ liftingNewUser }) => {
   const handleUserId = (e) => {
     setNewUser((prevState) => ({
       ...prevState,
-      userId: Number(e.target.value),
+      userId: +e.target.value,
     }));
   };
 
   return (
-    <form onSubmit={handleSubmitForm}>
+    <form onSubmit={handleSubmitForm} ref={formRef}>
       <fieldset className="form-style">
         <legend>Add Candidate</legend>
         <label>
@@ -71,7 +80,6 @@ const Form = ({ liftingNewUser }) => {
             onChange={handleUserCompleted}
           />
         </label>
-
         <button type="submit">Submit</button>
       </fieldset>
     </form>

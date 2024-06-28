@@ -3,7 +3,7 @@ const Button = ({ btn = [], item = {}, className = "" }) => {
   return (
     <button
       className={className}
-      onClick={() => btn.handleClick(item.id, item.completed)}
+      onClick={() => btn.handleClick(item.id)}
     >
       {btn.title}
     </button>
