@@ -1,37 +1,31 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 
-const Filter = ({ liftingNameFilter, liftingExpFilter }) => {
-  const [nameFilter, setNameFilter] = useState("");
-  const [expFilter, setExpFilter] = useState(0);
-  //   const [status, setStatus] = useState({
-  //     all: true,
-  //     completed: false,
-  //     uncompleted: false,
-  //   });
-  const DEFAULT_STATUS = {
-    all: true,
-    completed: false,
-    uncompleted: false,
-  };
+import {
+  STATUS_ALL,
+  STATUS_COMPLETED,
+  STATUS_UNCOMPLETED,
+} from "../../../constants/constants";
+import useFilters from "../../../hooks/useFilters";
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-    // liftingNameFilter(nameFilter);
-  };
-
-  const handleFilterByName = (e) => {
-    setNameFilter(e.target.value);
-    liftingNameFilter(e.target.value);
-  };
-
-  const handleFilterByExp = (e) => {
-    setExpFilter(e.target.value);
-    liftingExpFilter(e.target.value);
-  };
+const Filter = ({
+  liftingNameFilter,
+  liftingExpFilter,
+  liftingStatusFilter,
+}) => {
+  const {
+    nameFilter,
+    expFilter,
+    status,
+    formRef,
+    handleSubmitForm,
+    handleResetForm,
+    handleFilterByName,
+    handleFilterByExp,
+    handleFilterByStatus,
+  } = useFilters(liftingNameFilter, liftingExpFilter, liftingStatusFilter);
 
   return (
-    <form onSubmit={handleSubmitForm}>
+    <form onSubmit={handleSubmitForm} ref={formRef}>
       <fieldset>
         <legend>Filter</legend>
         <label>
@@ -65,7 +59,9 @@ const Filter = ({ liftingNameFilter, liftingExpFilter }) => {
             <input
               type="radio"
               name="status"
-              defaultChecked={DEFAULT_STATUS.all}
+              value="all"
+              checked={status === STATUS_ALL}
+              onChange={handleFilterByStatus}
             />
           </label>
           <label>
@@ -73,7 +69,9 @@ const Filter = ({ liftingNameFilter, liftingExpFilter }) => {
             <input
               type="radio"
               name="status"
-              defaultChecked={DEFAULT_STATUS.completed}
+              value="completed"
+              checked={status === STATUS_COMPLETED}
+              onChange={handleFilterByStatus}
             />
           </label>
           <label>
@@ -81,11 +79,13 @@ const Filter = ({ liftingNameFilter, liftingExpFilter }) => {
             <input
               type="radio"
               name="status"
-              defaultChecked={DEFAULT_STATUS.uncompleted}
+              value="uncompleted"
+              checked={status === STATUS_UNCOMPLETED}
+              onChange={handleFilterByStatus}
             />
           </label>
         </div>
-        <button>RESET</button>
+        <button onClick={handleResetForm}>RESET</button>
       </fieldset>
     </form>
   );

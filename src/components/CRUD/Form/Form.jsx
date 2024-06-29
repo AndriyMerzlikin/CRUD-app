@@ -1,48 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useRef, useState } from "react";
-import employees from "../../../services/employees";
+import useForm from "../../../hooks/useForm";
 
 const Form = ({ liftingNewUser }) => {
-  const [newUser, setNewUser] = useState({
-    userId: 0,
-    title: "",
-    completed: true,
-  });
-
-  const formRef = useRef();
-
-  const handleSubmitForm = async (e) => {
-    e.preventDefault();
-    console.log("hello");
-    try {
-      const response = await employees.post(newUser);
-      liftingNewUser(response);
-      handleResetForm();
-      console.log("new user is added!!!", response);
-      alert("new user is added!!!");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleResetForm = () => {
-    formRef.current.reset();
-  };
-
-  const handleUserTitle = (e) => {
-    setNewUser((prevState) => ({ ...prevState, title: e.target.value }));
-  };
-
-  const handleUserCompleted = (e) => {
-    setNewUser((prevState) => ({ ...prevState, completed: e.target.checked }));
-  };
-
-  const handleUserId = (e) => {
-    setNewUser((prevState) => ({
-      ...prevState,
-      userId: +e.target.value,
-    }));
-  };
+  const {
+    newUser,
+    formRef,
+    handleSubmitForm,
+    handleUserTitle,
+    handleUserCompleted,
+    handleUserId,
+  } = useForm(liftingNewUser);
 
   return (
     <form onSubmit={handleSubmitForm} ref={formRef}>
@@ -58,7 +25,7 @@ const Form = ({ liftingNewUser }) => {
           />
         </label>
         <label>
-          Experience:
+          Experience:{" "}
           <select defaultValue={newUser.userId} onChange={handleUserId}>
             <option value="1">1</option>
             <option value="2">2</option>

@@ -5,14 +5,24 @@ import Filter from "./Filter/Filter";
 
 const CRUD = () => {
   const [newUser, setNewUser] = useState();
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState();
   const [newExp, setNewExp] = useState();
+  const [newStatus, setNewStatus] = useState();
 
   return (
     <>
       <Form liftingNewUser={setNewUser} />
-      <Filter liftingNameFilter={setNewName} liftingExpFilter={setNewExp} />
-      <Employees newUser={newUser} newName={newName} newExp={newExp} />
+      <Filter
+        liftingNameFilter={setNewName}
+        liftingExpFilter={setNewExp}
+        liftingStatusFilter={setNewStatus}
+      />
+      <Employees
+        newUser={newUser}
+        newName={newName}
+        newExp={newExp}
+        newStatus={newStatus}
+      />
     </>
   );
 };

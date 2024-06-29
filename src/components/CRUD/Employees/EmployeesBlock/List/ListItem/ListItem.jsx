@@ -1,11 +1,15 @@
 import Button from "../../../Button/Button";
+import {
+  ACTIVE_STYLE,
+  INACTIVE_STYLE,
+} from "../../../../../../constants/constants";
 
 /* eslint-disable react/prop-types */
 const ListItem = ({ item = {}, btns = [], filters = [] }) => {
   return (
     <li
       key={item.id}
-      className={item.completed ? "item-active" : "item-not-active"}
+      className={item.completed ? ACTIVE_STYLE : INACTIVE_STYLE}
     >
       <p className="truncated-text">{item.title}</p>
 

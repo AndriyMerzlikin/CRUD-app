@@ -30,10 +30,12 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 140px;
 }
 
 .scroll-list {
+  list-style: none;
+  padding: 5px;
   max-height: 400px;
   overflow-y: auto;
   display: flex;
@@ -58,12 +60,16 @@ body {
 }
 
 .item-active {
+  border: 1px solid black;
+  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   background-color: green;
 }
 
 .item-not-active {
+  border: 1px solid black;
+  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   background-color: red;
