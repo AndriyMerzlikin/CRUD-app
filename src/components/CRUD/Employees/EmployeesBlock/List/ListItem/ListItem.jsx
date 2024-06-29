@@ -14,7 +14,7 @@ const ListItem = ({ item = {}, btns = [], filters = [] }) => {
       <p className="truncated-text">{item.title}</p>
 
       {btns.map((btn, index) => (
-        <Button key={index} btn={btn} item={item} />
+        <Button key={index} btn={btn} item={item} className="item-btn-styled" />
       ))}
 
       {filters.map((filter, index) => (
